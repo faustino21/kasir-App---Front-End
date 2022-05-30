@@ -93,7 +93,7 @@ export const CashierList = () => {
             paging()
         }
         <Pagination.Next disabled={page.skip === Math.ceil(totalData / page.limit)-1} onClick={()=> pagination(page.skip + 1)}/>
-        <Pagination.Last disabled={page.skip === Math.ceil(totalData / page.limit)-1} onClick={()=> pagination(Math.ceil(totalData / page.limit))}/>
+        <Pagination.Last disabled={page.skip === Math.ceil(totalData / page.limit)-1} onClick={()=> pagination(Math.ceil(totalData / page.limit)-1)}/>
     </Pagination>
     </>
   )
