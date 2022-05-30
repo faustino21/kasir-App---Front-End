@@ -1,9 +1,9 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import CashierAction from '../redux/cashierReducer/cashierAction'
+import { deleteCashier, getCashiers } from './services/cashierService'
 
 export const CashierList = () => {
     const [cashierList, setCashierList] = useState([])
@@ -18,18 +18,18 @@ export const CashierList = () => {
 
     const getCashier = async (skip = page.skip) => {
         try {
-            const response = await axios.get(`http://localhost:3000/cashiers?limit=${page.limit}&skip=${skip * page.limit}`)
+            const response = await getCashiers({"limit" : page.limit, "skip" : skip*page.limit})
             console.log("Data", response);
             setCashierList(response.data.data.cashiers)
             setTotalData(response.data.data.meta.total)
         } catch (error) {
-            console.error(error)
+            console.error(error, "error")
         }
     }
 
     const handleDelete = async (e) => {
         if (window.confirm(`are you sure want to delete ${e.name}`)) {
-            await axios.delete(`http://localhost:3000/cashiers/${e.cashierId}`)
+            deleteCashier(e.cashierId)
             getCashier()
         } else {
             getCashier()            
