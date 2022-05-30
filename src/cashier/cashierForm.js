@@ -41,8 +41,8 @@ export const CashierForm = () => {
   
   const getDataById = () => {
     console.log("test");
-      // formik.values.name = cashierRedux.name
-  //     formik.setFieldValue(cashierRedux)
+      formik.values.name = cashierRedux.name
+      formik.setFieldValue(cashierRedux)
   }
 
   const handleUpdate = async () => {
