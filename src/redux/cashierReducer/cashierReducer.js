@@ -21,8 +21,7 @@ const cashierReducer = (state = CashierState, action)=> {
         case CashierAction.RESET:
             return{
                 ...state,
-                name : '',
-                password : ''
+                name : ''
             }
         default:
             break;

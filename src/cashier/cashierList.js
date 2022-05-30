@@ -19,7 +19,6 @@ export const CashierList = () => {
     const getCashier = async (skip = page.skip) => {
         try {
             const response = await getCashiers({"limit" : page.limit, "skip" : skip*page.limit})
-            console.log("Data", response);
             setCashierList(response.data.data.cashiers)
             setTotalData(response.data.data.meta.total)
         } catch (error) {

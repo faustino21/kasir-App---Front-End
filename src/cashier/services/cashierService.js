@@ -5,6 +5,14 @@ export const getCashiers = async (params) => {
     return response
 }
 
-export const deleteCashier = async (param) => {
-    await client.delete(`/cashiers/${param}`)
+export const deleteCashier = async (id) => {
+    await client.delete(`/cashiers/${id}`)
+}
+
+export const updateCashier = async (id, data) => {
+    await client.put(`/cashiers/${id}` , data) 
+}
+
+export const submitCashier = async (cashier) => {
+    await client.post('cashiers', cashier)
 }
