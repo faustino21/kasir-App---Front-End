@@ -2,13 +2,19 @@ import { useState } from "react"
 import { Pagination } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import CashierAction from "../../redux/cashierReducer/cashierAction"
-import { deleteCashier, getCashiers } from "../services/cashierService"
+import CashierAction from "../../../redux/cashierReducer/cashierAction"
 
 
 // Bloc digunakan untuk memisahkan logic dan screen pada sebuah component
 
-const ProductListBloc = () => {
+const CashierListBloc = (cashierRepository) => {
+
+    let {
+        getCashiers,
+        deleteCashier,
+    } = cashierRepository()
+
+    const [loading, setLoading] = useState(true)
     const [cashierList, setCashierList] = useState([])
     const [totalData, setTotalData] = useState("")
     const page = useSelector(state => state.cashier)
@@ -17,7 +23,9 @@ const ProductListBloc = () => {
 
     const getCashier = async (skip = page.skip) => {
         try {
+            setLoading(true)
             const response = await getCashiers({"limit" : page.limit, "skip" : skip*page.limit})
+            setLoading(false)
             setCashierList(response.data.data.cashiers)
             setTotalData(response.data.data.meta.total)
         } catch (error) {
@@ -54,8 +62,17 @@ const ProductListBloc = () => {
         getCashier(page)
     }
 
-    return {cashierList, getCashier, handleDelete, paging, handleUpdate, pagination, page, totalData}
+    return {cashierList, 
+        getCashier, 
+        handleDelete, 
+        paging, 
+        handleUpdate, 
+        pagination, 
+        page, 
+        totalData,
+        loading
+    }
 }
 
 
-export default ProductListBloc;
+export default CashierListBloc;

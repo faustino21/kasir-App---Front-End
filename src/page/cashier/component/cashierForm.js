@@ -1,17 +1,18 @@
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom'
-import CashierAction from '../redux/cashierReducer/cashierAction';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { submitCashier, updateCashier } from './services/cashierService';
 
-export const CashierForm = () => {
-  let params = useParams()
+export const CashierForm = ({bloc}) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const cashierRedux = useSelector(state => state.cashier)
-
+ 
+  const {
+    params,
+    handleUpdate,
+    handleAdd,
+  } = bloc()
 
   const formik = useFormik({
   initialValues: {
@@ -19,52 +20,27 @@ export const CashierForm = () => {
     passcode : ''
   },
   validationSchema : Yup.object({
-    name : Yup.string().required("Tidak boleh kosong").min(5, "Minimal 5 karakter"),
+    name : Yup.string().required("Tidak boleh kosong"),
     passcode : Yup.string().required("Tida boleh kosong").min(6, "Harus 6 karakter" ).max(6, "Harus 6 karakter")
   }),
   onSubmit : () => {
       if (params.id){
-        handleUpdate()
+        handleUpdate(formik.values)
       } else {
-        handleAdd()
+        handleAdd(formik.values)
       }
     }
   })
 
   useEffect(()=> {
-    if(params.id){
     getDataById()
-    }
   }, [])
 
   
-  
   const getDataById = () => {
     console.log("test");
-      formik.values.name = cashierRedux.name
-      formik.setFieldValue(cashierRedux)
-  }
-
-  const handleUpdate = async () => {
-    try {
-      const res = await updateCashier(params.id, formik.values)
-      console.log("UPDATE : ", res);
-      dispatch({type : CashierAction.RESET})
-      navigate("/cashiers")
-    } catch (error) {
-      console.log("ini handle update", error);      
-    }
-  }
-
-  const handleAdd = async () => {
-    try {
-      let res = await submitCashier(formik.values)
-      console.log("SUBMIT", res);
-      dispatch({type : CashierAction.RESET})
-      navigate("/cashiers")
-    } catch (error) {
-      console.log(error);
-    }
+    formik.values.name = cashierRedux.name
+    formik.setFieldValue(cashierRedux)
   }
   
   return (

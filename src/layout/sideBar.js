@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Sidebar = () => {
     return (
         <>
-        <Nav>
+        <Nav vertical pills>
             <NavItem>
                 <NavLink to='/' className="nav-link">Home</NavLink>
             </NavItem>

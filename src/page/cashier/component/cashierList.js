@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import ProductListBloc from './bloc/productListBloc'
+import { LoadingScreen } from '../../../layout/loading'
 
-export const CashierList = () => {
+export const CashierList = ({bloc}) => {
     const navigate = useNavigate()
-    const {cashierList, getCashier, handleDelete, paging, handleUpdate, pagination, page, totalData} = ProductListBloc()
+    const {cashierList, 
+        getCashier, 
+        handleDelete, 
+        paging, 
+        handleUpdate, 
+        pagination, 
+        page, 
+        totalData,
+        loading
+    } = bloc()
 
     useEffect(()=>{
         getCashier()
     }, [])
 
+    console.log(loading);
    
-  return (
+  return (    
+    <div>
+    {
+        loading ? (<LoadingScreen/>
+        ) : (
     <>
     <button className='btn btn-primary' onClick={()=>navigate('form')}> Add Cashier</button>
     <h2>Cashier List</h2>
@@ -52,6 +66,7 @@ export const CashierList = () => {
         <Pagination.Next disabled={page.skip === Math.ceil(totalData / page.limit)-1} onClick={()=> pagination(page.skip + 1)}/>
         <Pagination.Last disabled={page.skip === Math.ceil(totalData / page.limit)-1} onClick={()=> pagination(Math.ceil(totalData / page.limit)-1)}/>
     </Pagination>
-    </>
+    </>)}
+    </div>
   )
 }
