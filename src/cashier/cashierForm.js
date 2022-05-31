@@ -66,33 +66,6 @@ export const CashierForm = () => {
       console.log(error);
     }
   }
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault()
-  //   try{
-  //     if (params.id) {
-  //       await axios.put(`http://localhost:3000/cashiers/${params.id}`, {
-  //         "name" : cashier.name,
-  //         "passcode" : cashier.password
-  //       }, console.log("PUT CALLED", params))     
-  //     } else {
-  //       await axios.post('http://localhost:3000/cashiers',{
-  //         "name" : cashier.name,
-  //         "passcode" : cashier.password
-  //       }, console.log("SUBMIT : ", cashier))    
-  //     }
-  //     dispatch({type : CashierAction.RESET})
-  //     console.log("Res : ", cashier);
-  //     console.log("Redux reset", cashierRedux);
-  //     navigate("/cashiers")
-  // } catch(error){
-  //     dispatch({type : CashierAction.RESET})
-  //     console.error(error);
-  //   }
-  // }
-
-
   
   return (
    <>
