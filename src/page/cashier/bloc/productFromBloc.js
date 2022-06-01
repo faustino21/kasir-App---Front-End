@@ -2,11 +2,11 @@ import { useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import CashierAction from "../../../redux/cashierReducer/cashierAction"
 
-const ProductFormBloc = (productRepository) => {
+const CashierFormBloc = (productRepository) => {
 
     const {
-        updateCashier,
-        submitCashier
+      updateCashier,
+      submitCashier
     } = productRepository()
 
     const params = useParams()
@@ -19,7 +19,7 @@ const ProductFormBloc = (productRepository) => {
           const res = await updateCashier(params.id,values)
           console.log("UPDATE : ", res);
           dispatch({type : CashierAction.RESET})
-          navigate("/cashiers")
+          navigate("..")
         } catch (error) {
           console.log("ini handle update", error);      
         }
@@ -30,17 +30,23 @@ const ProductFormBloc = (productRepository) => {
           let res = await submitCashier(values)
           console.log("SUBMIT", res);
           dispatch({type : CashierAction.RESET})
-          navigate("/cashiers")
+          navigate("..")
         } catch (error) {
           console.log(error);
         }
+    }
+
+    function handleCancel() {
+        dispatch({type : CashierAction.RESET})
+        navigate("..")
     }
 
     return {
         params,
         handleUpdate,
         handleAdd,
+        handleCancel
     }
 }
 
-export default ProductFormBloc;
+export default CashierFormBloc;

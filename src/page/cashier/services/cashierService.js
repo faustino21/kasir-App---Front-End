@@ -8,11 +8,13 @@ const CashierService = () => {
     }
     
     const deleteCashier = async (id) => {
-        await client.delete(`/cashiers/${id}`)
+        const res = await client.delete(`/cashiers/${id}`)
+        return res
     }
     
     const updateCashier = async (id, data) => {
-        await client.put(`/cashiers/${id}` , data) 
+        const res = await client.put(`/cashiers/${id}` , data)
+        return res 
     }
     
     const submitCashier = async (cashier) => {

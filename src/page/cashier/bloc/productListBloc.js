@@ -25,9 +25,9 @@ const CashierListBloc = (cashierRepository) => {
         try {
             setLoading(true)
             const response = await getCashiers({"limit" : page.limit, "skip" : skip*page.limit})
-            setLoading(false)
             setCashierList(response.data.data.cashiers)
             setTotalData(response.data.data.meta.total)
+            setLoading(false)
         } catch (error) {
             console.error(error, "error")
         }

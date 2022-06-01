@@ -1,17 +1,16 @@
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 export const CashierForm = ({bloc}) => {
-  const navigate = useNavigate()
   const cashierRedux = useSelector(state => state.cashier)
  
   const {
     params,
     handleUpdate,
     handleAdd,
+    handleCancel
   } = bloc()
 
   const formik = useFormik({
@@ -48,7 +47,7 @@ export const CashierForm = ({bloc}) => {
     <form onSubmit={formik.handleSubmit}>
       <div className="mb-3">
         <label htmlFor='name' className="form-label">Cashier Name</label>
-        <input name='name' type="text" className="form-control" id='inputName' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+        <input name='name' type="text" className="form-control" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
         {
           formik.errors.name && formik.touched.name && (
             <small className='text-danger'>{formik.errors.name}</small>
@@ -57,7 +56,7 @@ export const CashierForm = ({bloc}) => {
       </div>
       <div className="mb-3">
         <label htmlFor="passcode" className="form-label" >New Password</label>
-        <input name='passcode' id='inputPasscode' type="password" className="form-control" value={formik.values.passcode} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+        <input name='passcode' type="password" className="form-control" value={formik.values.passcode} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
         {
           formik.errors.passcode && formik.touched.passcode && (
             <small className='text-danger'>{formik.errors.passcode}</small>
@@ -65,7 +64,7 @@ export const CashierForm = ({bloc}) => {
         }
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
-      <button type="button" className="btn btn-primary" onClick={()=> navigate('/cashiers')}>Cancel</button>
+      <button type="button" className="btn btn-primary" onClick={()=>handleCancel()}>Cancel</button>
     </form>
     </>
   )

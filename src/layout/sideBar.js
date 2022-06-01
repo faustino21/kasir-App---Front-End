@@ -1,19 +1,18 @@
-import { Nav, NavItem } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+    const navigate = useNavigate()
+
     return (
         <>
-        <Nav vertical pills>
-            <NavItem>
-                <NavLink to='/' className="nav-link">Home</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink to='/cashiers' className="nav-link">Cashiers</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink to='/' className="nav-link">Product</NavLink>
-            </NavItem>
+        <Nav variant="pills" defaultActiveKey="/protected" className="flex-column">
+            <Nav.Item>
+                <Nav.Link eventKey="/protected" onClick={()=> navigate("/protected")}>Home</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link eventKey="cashiers" onClick={()=> navigate("cashiers")}>Cashier</Nav.Link>
+            </Nav.Item>
         </Nav>
         </>
     )
